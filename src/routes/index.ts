@@ -5,6 +5,7 @@ router.use('/auth', require('./auth-routes'));
 
 // handle semua route /api/users ke router user
 // router.use('/users', require('./user-routes'));
+router.use('/users', require('./user-routes'));
 
 router.use('/courses', require('./course-routes'));
 
