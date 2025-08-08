@@ -19,9 +19,6 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 // handle seluruh request /api/* ke route API
 app.use('/api', apiRoutes);
 
-// event loop
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+module.exports = app;
 
 export default app;
