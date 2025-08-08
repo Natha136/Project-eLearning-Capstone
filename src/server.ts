@@ -19,6 +19,8 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 // handle seluruh request /api/* ke route API
 app.use('/api', apiRoutes);
 
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 export default app;
