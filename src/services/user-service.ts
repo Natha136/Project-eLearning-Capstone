@@ -1,43 +1,29 @@
+// src/services/user-service.ts
 import { User } from '../models/user-model';
-const storedUsers = require('../data/user-data');
+const db = require('../config/database/connection');
 
-// cari user berdasarkan id nya
-const findUserById = (id: number): User | undefined => {
-  return storedUsers.find((user: User) => user.id == id);
+// cari user berdasarkan id
+const findUserById = async (id: number): Promise<User | undefined> => {
+  return (await db('users').where({ id }).first()) as User;
 };
 exports.findUserById = findUserById;
 
 // dapatkan semua user
-exports.getUsers = (): User => {
-  const data: User = storedUsers;
-
-  return data || [];
+exports.getUsers = async (): Promise<User[]> => {
+  return (await db('users').select('*')) as User[];
 };
 
 // ubah data user
-exports.updateUserById = (
-  id: number,
-  input: User,
-): User | undefined => {
-  const user = findUserById(id);
-  if (!user) return undefined;
-
-  Object.assign(user, input);
-  return user;
+exports.updateUserById = async (id: number, input: User): Promise<User | undefined> => {
+  await db('users').where({ id }).update(input);
+  return findUserById(id);
 };
 
 // hapus data user berdasarkan id nya
-exports.deleteUserById = (
-  id: number,
-): User | undefined => {
-  const user = findUserById(id);
+exports.deleteUserById = async (id: number): Promise<User | undefined> => {
+  const user = await findUserById(id);
   if (!user) return undefined;
 
-  const index = storedUsers.indexOf(user);
-  if (index !== -1) {
-    storedUsers.splice(index, 1);
-    return user;
-  }
-
-  return undefined;
+  await db('users').where({ id }).del();
+  return user;
 };
