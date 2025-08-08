@@ -3,7 +3,6 @@ const router = require('express').Router();
 const authenticationMiddleware = require('../middlewares/authentication-middleware');
 const onlyAdminMiddleware = require('../middlewares/only-admin-middleware');
 const onlyStudentMiddleware = require('../middlewares/only-student-middleware');
-const onlyMentorMiddleware = require('../middlewares/only-mentor-middleware');
 const userController = require('../controllers/user-controller');
 
 // GET /api/users
