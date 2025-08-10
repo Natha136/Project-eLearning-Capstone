@@ -22,7 +22,7 @@ exports.updateUserByEmail = async (email: string, input: Partial<User>): Promise
 // hapus data user berdasarkan email nya
 exports.deleteUserByEmail = async (email: string): Promise<User | undefined> => {
   if (!email) return undefined;
-  const user = await userRepository.findUserByEmail(email);
+  const user = await userRepository.findByEmail(email);
   if (!user) return undefined;
 
   // Hapus langsung dari DB
