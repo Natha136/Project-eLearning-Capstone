@@ -1,29 +1,29 @@
-// src/services/user-service.ts
 import { User } from '../models/user-model';
-const db = require('../config/database/connection');
 
-// cari user berdasarkan id
-const findUserById = async (id: number): Promise<User | undefined> => {
-  return (await db('users').where({ id }).first()) as User;
-};
-exports.findUserById = findUserById;
+const userRepository = require('../repositories/user-repository');
+const { findUserByEmail } = require('../services/auth-service');
+const filesystem = require('../utilities/filesystem');
 
 // dapatkan semua user
-exports.getUsers = async (): Promise<User[]> => {
-  return (await db('users').select('*')) as User[];
+exports.getAllUsers = async (): Promise<User[]> => {
+  return await userRepository.getAllUsers();
 };
 
 // ubah data user
-exports.updateUserById = async (id: number, input: User): Promise<User | undefined> => {
-  await db('users').where({ id }).update(input);
-  return findUserById(id);
+exports.updateUserByEmail = async (email: string, input: User): Promise<User | undefined> => {
+  return await userRepository.updateUserByEmail(email, input);
 };
 
-// hapus data user berdasarkan id nya
-exports.deleteUserById = async (id: number): Promise<User | undefined> => {
-  const user = await findUserById(id);
+// hapus data user berdasarkan email nya
+exports.deleteUserByEmail = async (email: string): Promise<User | undefined> => {
+  const user = await userRepository.findUserByEmail(email);
   if (!user) return undefined;
 
-  await db('users').where({ id }).del();
-  return user;
+  const index = userRepository.indexOf(user);
+  if (index !== -1) {
+    userRepository.splice(index, 1);
+    return user;
+  }
+
+  return undefined;
 };

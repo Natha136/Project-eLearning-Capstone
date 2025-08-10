@@ -6,7 +6,7 @@ const userService = require('../services/user-service');
 // mendapatkan list users
 exports.index = async (req: Request, res: Response) => {
   try {
-    const userData = await userService.getUsers(); // ← pakai await
+    const userData = await userService.getAllUsers(); // ← pakai await
 
     if (!userData || userData.length === 0) {
       return res.status(404).json({
@@ -31,11 +31,11 @@ exports.index = async (req: Request, res: Response) => {
 
 // update user
 exports.update = async (req: AuthenticatedRequest, res: Response) => {
-  const userId = req.user.id;
+  const userEmail = req.user.email;
   const input = req.body;
 
   try {
-    const user = await userService.findUserById(userId); // ← pakai await
+    const user = await userService.findUserByEmail(userEmail); // ← pakai await
     if (!user) {
       return res.status(404).json({
         statusCode: 404,
@@ -43,7 +43,7 @@ exports.update = async (req: AuthenticatedRequest, res: Response) => {
       });
     }
 
-    const updatedUser = await userService.updateUserById(userId, input); // ← pakai await
+    const updatedUser = await userService.updateUserByEmail(userEmail, input); // ← pakai await
 
     return res.status(200).json({
       statusCode: 200,
@@ -59,12 +59,12 @@ exports.update = async (req: AuthenticatedRequest, res: Response) => {
   }
 };
 
-// hapus user berdasarkan id nya
-exports.deleteById = async (req: AuthenticatedRequest, res: Response) => {
-  const userId = req.params.id;
+// hapus user berdasarkan email nya
+exports.deleteByEmail = async (req: AuthenticatedRequest, res: Response) => {
+  const userEmail = req.user.email;
 
   try {
-    const user = await userService.findUserById(userId); // ← pakai await
+    const user = await userService.findUserByEmail(userEmail); // ← pakai await
     if (!user) {
       return res.status(404).json({
         statusCode: 404,
@@ -72,7 +72,7 @@ exports.deleteById = async (req: AuthenticatedRequest, res: Response) => {
       });
     }
 
-    const deletedUser = await userService.deleteUserById(userId); // ← pakai await
+    const deletedUser = await userService.deleteUserByEmail(userEmail); // ← pakai await
 
     return res.status(200).json({
       statusCode: 200,
