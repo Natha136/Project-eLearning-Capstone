@@ -71,11 +71,11 @@ exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
 
 // update user
 exports.update = async (req: AuthenticatedRequest, res: Response) => {
-  const userEmail = req.params.email;
+  const email = req.params.email;
   const input = req.body;
 
   try {
-    const user = await authService.findUserByEmail(userEmail); // ← pakai await
+    const user = await authService.findUserByEmail(email); // ← pakai await
     if (!user) {
       return res.status(404).json({
         statusCode: 404,
@@ -83,7 +83,7 @@ exports.update = async (req: AuthenticatedRequest, res: Response) => {
       });
     }
 
-    const updatedUser = await userService.updateUserByEmail(userEmail, input); // ← pakai await
+    const updatedUser = await userService.updateUserByEmail(email, input); // ← pakai await
 
     return res.status(200).json({
       statusCode: 200,

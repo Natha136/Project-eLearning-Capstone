@@ -25,11 +25,8 @@ exports.deleteUserByEmail = async (email: string): Promise<User | undefined> => 
   const user = await userRepository.findUserByEmail(email);
   if (!user) return undefined;
 
-  const index = userRepository.indexOf(user);
-  if (index !== -1) {
-    userRepository.splice(index, 1);
-    return user;
-  }
-
-  return undefined;
+  // Hapus langsung dari DB
+  await userRepository.deleteUserByEmail(email);
+  
+  return user;
 };

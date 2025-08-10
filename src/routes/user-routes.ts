@@ -34,7 +34,7 @@ router.patch(
 
 // DELETE /api/users/:email -> hanya boleh oleh ADMIN
 router.delete(
-  '/:id',
+  '/:email',
   authenticationMiddleware,
   onlyAdminMiddleware,
   userController.deleteByEmail,
