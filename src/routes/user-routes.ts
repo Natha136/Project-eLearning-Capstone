@@ -8,6 +8,14 @@ const userController = require('../controllers/user-controller');
 // GET /api/users
 router.get('/', userController.index);
 
+// GET /api/users/:email
+router.get(
+  '/:email',
+  authenticationMiddleware,
+  onlyAdminMiddleware,
+  userController.getUserByEmail
+);
+
 // GET /api/users/students
 router.get(
   '/students',

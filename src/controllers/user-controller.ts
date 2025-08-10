@@ -30,6 +30,33 @@ exports.index = async (req: Request, res: Response) => {
   }
 };
 
+// get user by email
+exports.getUserByEmail = async (req: Request, res: Response) => {
+  const email = req.params.email;
+
+  try {
+    const user = await authService.findUserByEmail(email);
+    if (!user) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: 'User tidak ditemukan!',
+      });
+    }
+
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'Sukses mendapatkan user!',
+      data: user,
+    });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Error internal server!',
+    });
+  }
+};
+
 // add user
 exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
   const input = req.body;
