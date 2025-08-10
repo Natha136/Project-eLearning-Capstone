@@ -1,7 +1,14 @@
+
 import { Course } from '../models/course-model';
 
 const courseRepository = require('../repositories/course-repository');
 const filesystem = require('../utilities/filesystem');
+const userCourseRepository = require('../repositories/user-course-repository');
+
+// enrolled course
+exports.getEnrolledCourse = async (userId: number) => {
+  return await userCourseRepository.getEnrolledCoursesByUserId(userId);
+};
 
 // dapatkan semua kursus
 exports.getAllCourses = async (): Promise<Course[]> => {
@@ -10,14 +17,12 @@ exports.getAllCourses = async (): Promise<Course[]> => {
 
 // dapatkan kursus dari slug
 exports.getCourseBySlug = async (slug: string) => {
-  const courses = await courseRepository.getCourseBySlug(slug);
+  const course = await courseRepository.getCourseBySlug(slug);
 
-  // cek 'falsy'
-  if (!courses || courses.length === 0) {
+  if (!course) {   
     return null;
   }
-
-  return courses;
+  return course;
 };
 
 // menambahkan kursus baru

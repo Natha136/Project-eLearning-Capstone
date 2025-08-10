@@ -1,16 +1,16 @@
+
 const router = require('express').Router();
 
 const authenticationMiddleware = require('../middlewares/authentication-middleware');
-const onlyAdminMiddleware = require('../middlewares/only-admin-middleware');
 const onlyMentorMiddleware = require('../middlewares/only-mentor-middleware');
 const courseController = require('../controllers/course-controller');
 
-// // GET /api/courses/enrolled
-// router.get(
-//   '/enrolled',
-//   authenticationMiddleware,
-//   courseController.enrolledCourses,
-// );
+// GET /api/courses/enrolled
+router.get(
+    '/enrolled',
+    authenticationMiddleware,
+    courseController.enrolledCourses,
+);
 
 // GET /api/courses
 router.get('/', courseController.index);
