@@ -10,6 +10,10 @@ exports.findByEmail = async (email: string): Promise<User | undefined> => {
   return await User.query().findOne({ email });
 };
 
+exports.createUser = async (userData: Partial<User>): Promise<User> => {
+  return User.query().insert(userData);
+};
+
 // Update user berdasarkan email
 exports.updateUserByEmail = async (email: string, input: Partial<User>): Promise<User | undefined> => {
   const updatedUser = await User.query()
