@@ -19,12 +19,12 @@ router.get(
 // PATCH /api/users
 router.patch('/', authenticationMiddleware, userController.update);
 
-// DELETE /api/users/:id -> hanya boleh oleh ADMIN
+// DELETE /api/users/:email -> hanya boleh oleh ADMIN
 router.delete(
   '/:id',
   authenticationMiddleware,
   onlyAdminMiddleware,
-  userController.deleteById,
+  userController.deleteByEmail,
 );
 
 module.exports = router;
