@@ -6,6 +6,6 @@ const onlyStudentMiddleware = require('../middlewares/only-student-middleware');
 const userCourseController = require('../controllers/user-course-controller');
 
 // POST api/user_courses
-router.post('/', authenticationMiddleware, userCourseController.enroll);
+router.post('/', authenticationMiddleware, onlyStudentMiddleware, userCourseController.enroll);
 
 module.exports = router;

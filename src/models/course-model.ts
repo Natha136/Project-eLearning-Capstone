@@ -7,6 +7,7 @@ export class Course extends Model {
   id?: number;
   title!: string;
   slug!: string;
+  mentor!: string;
   description!: string;
   image!: string;
   created_at?: Date;
