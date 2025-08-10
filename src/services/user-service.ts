@@ -14,12 +14,14 @@ exports.addUser = async (userData: User) => {
 };
 
 // ubah data user
-exports.updateUserByEmail = async (email: string, input: User): Promise<User | undefined> => {
+exports.updateUserByEmail = async (email: string, input: Partial<User>): Promise<User | undefined> => {
+  if (!email) return undefined;
   return await userRepository.updateUserByEmail(email, input);
 };
 
 // hapus data user berdasarkan email nya
 exports.deleteUserByEmail = async (email: string): Promise<User | undefined> => {
+  if (!email) return undefined;
   const user = await userRepository.findUserByEmail(email);
   if (!user) return undefined;
 
