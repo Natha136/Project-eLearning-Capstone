@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { AuthenticatedRequest } from '../types/authenticated-request-type';
 
 const userService = require('../services/user-service');
+const authService = require('../services/auth-service');
 
 // mendapatkan list users
 exports.index = async (req: Request, res: Response) => {
@@ -30,7 +31,6 @@ exports.index = async (req: Request, res: Response) => {
 };
 
 // add user
-// tambah user
 exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
   const input = req.body;
 
@@ -44,7 +44,7 @@ exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
     }
 
     // Cek apakah user sudah ada
-    const existingUser = await userService.findUserByEmail(input.email);
+    const existingUser = await authService.findUserByEmail(input.email);
     if (existingUser) {
       return res.status(400).json({
         statusCode: 400,
@@ -75,7 +75,7 @@ exports.update = async (req: AuthenticatedRequest, res: Response) => {
   const input = req.body;
 
   try {
-    const user = await userService.findUserByEmail(userEmail); // ← pakai await
+    const user = await authService.findUserByEmail(userEmail); // ← pakai await
     if (!user) {
       return res.status(404).json({
         statusCode: 404,
@@ -104,7 +104,7 @@ exports.deleteByEmail = async (req: AuthenticatedRequest, res: Response) => {
   const userEmail = req.user.email;
 
   try {
-    const user = await userService.findUserByEmail(userEmail); // ← pakai await
+    const user = await authService.findUserByEmail(userEmail); // ← pakai await
     if (!user) {
       return res.status(404).json({
         statusCode: 404,
