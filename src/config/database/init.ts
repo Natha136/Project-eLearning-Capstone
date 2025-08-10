@@ -10,7 +10,7 @@ import type { Knex } from 'knex';
 const config: Knex.Config = {
   client: process.env.DATABASE_DRIVER || 'pg',
   connection: process.env.DATABASE_URL,
-  searchPath: process.env.DATABASE_SCHEMA?.split(',') || ['public'],
+  searchPath: process.env.DATABASE_SCHEMA?.split(',') || ['backend_elearning'],
   migrations: {
     directory: __dirname + '/../../database/migrations',
   },
