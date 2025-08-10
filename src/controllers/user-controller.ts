@@ -71,7 +71,7 @@ exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
 
 // update user
 exports.update = async (req: AuthenticatedRequest, res: Response) => {
-  const userEmail = req.params.email;
+  const userEmail = req.params.email || req.body.email;
   const input = req.body;
 
   try {
@@ -101,7 +101,7 @@ exports.update = async (req: AuthenticatedRequest, res: Response) => {
 
 // hapus user berdasarkan email nya
 exports.deleteByEmail = async (req: AuthenticatedRequest, res: Response) => {
-  const userEmail = req.params.email;
+  const userEmail = req.params.email || req.body.email;
 
   try {
     const user = await authService.findUserByEmail(userEmail); // ← pakai await
