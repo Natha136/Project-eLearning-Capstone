@@ -16,6 +16,14 @@ router.get(
   userController.index,
 );
 
+// POST /api/users → hanya admin yang boleh tambah user
+router.post(
+  '/',
+  authenticationMiddleware,
+  onlyAdminMiddleware,
+  userController.addUser
+);
+
 // PATCH /api/users
 router.patch('/', authenticationMiddleware, userController.update);
 

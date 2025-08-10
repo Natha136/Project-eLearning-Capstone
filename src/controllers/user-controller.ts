@@ -29,6 +29,46 @@ exports.index = async (req: Request, res: Response) => {
   }
 };
 
+// add user
+// tambah user
+exports.addUser = async (req: AuthenticatedRequest, res: Response) => {
+  const input = req.body;
+
+  try {
+    // Validasi input sederhana
+    if (!input.name || !input.email || !input.password || !input.role) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: 'Input tidak lengkap!',
+      });
+    }
+
+    // Cek apakah user sudah ada
+    const existingUser = await userService.findUserByEmail(input.email);
+    if (existingUser) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: 'Email sudah terdaftar!',
+      });
+    }
+
+    // Simpan user baru
+    const newUser = await userService.addUser(input);
+
+    return res.status(201).json({
+      statusCode: 201,
+      message: 'User berhasil ditambahkan!',
+      data: newUser,
+    });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Error internal server!',
+    });
+  }
+};
+
 // update user
 exports.update = async (req: AuthenticatedRequest, res: Response) => {
   const userEmail = req.user.email;

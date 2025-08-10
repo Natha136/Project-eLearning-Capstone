@@ -9,6 +9,10 @@ exports.getAllUsers = async (): Promise<User[]> => {
   return await userRepository.getAllUsers();
 };
 
+exports.addUser = async (userData: User) => {
+  return await userRepository.create(userData);
+};
+
 // ubah data user
 exports.updateUserByEmail = async (email: string, input: User): Promise<User | undefined> => {
   return await userRepository.updateUserByEmail(email, input);
