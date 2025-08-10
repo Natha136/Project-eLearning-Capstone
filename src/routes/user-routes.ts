@@ -25,7 +25,12 @@ router.post(
 );
 
 // PATCH /api/users
-router.patch('/', authenticationMiddleware, userController.update);
+router.patch(
+  '/', 
+  authenticationMiddleware,
+  onlyAdminMiddleware,
+  userController.update
+);
 
 // DELETE /api/users/:email -> hanya boleh oleh ADMIN
 router.delete(
