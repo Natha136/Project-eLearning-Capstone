@@ -2,6 +2,24 @@ import { Response } from 'express';
 import { AuthenticatedRequest } from '../types/authenticated-request-type';
 import * as userCourseService from '../services/user-course-service';
 
+export const getAll = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const data = await userCourseService.getAllUserCourses();
+
+    return res.status(200).json({
+      statusCode: 200,
+      message: 'Berhasil mengambil semua data user-course',
+      data
+    });
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({
+      statusCode: 500,
+      message: 'Error internal server'
+    });
+  }
+};
+
 export const enroll = async (req: AuthenticatedRequest, res: Response) => {
   try {
     let { user_id, course_id } = req.body;
