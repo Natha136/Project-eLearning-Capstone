@@ -26,7 +26,7 @@ router.post(
 
 // PATCH /api/users
 router.patch(
-  '/', 
+  '/:email', 
   authenticationMiddleware,
   onlyAdminMiddleware,
   userController.update
