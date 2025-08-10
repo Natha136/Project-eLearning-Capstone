@@ -54,6 +54,7 @@ exports.show = async (req: Request, res: Response) => {
 
 // menambahkan kursus baru
 exports.create = async (req: Request, res: Response) => {
+  console.log("Storage driver in runtime:", process.env.STORAGE_DRIVER);
   const data = req.body;
   const files: any = req.files;
   data.files = files;
