@@ -6,7 +6,7 @@ exports.getAllUsers = async (): Promise<User[]> => {
 };
 
 // Cari user berdasarkan email
-exports.findUserByEmail = async (email: string): Promise<User | undefined> => {
+exports.findByEmail = async (email: string): Promise<User | undefined> => {
   return await User.query().findOne({ email });
 };
 
