@@ -10,7 +10,7 @@ exports.getAllUsers = async (): Promise<User[]> => {
 };
 
 exports.addUser = async (userData: User) => {
-  return await userRepository.create(userData);
+  return await userRepository.createUser(userData);
 };
 
 // ubah data user
