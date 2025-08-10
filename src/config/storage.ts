@@ -4,6 +4,8 @@
 let driver = process.env.STORAGE_DRIVER || 'local';
 let storage: any = {};
 
+console.log("Storage driver in runtime:", process.env.STORAGE_DRIVER);
+
 switch (driver) {
   case 'cloudinary':
     const cloudinary = require('cloudinary').v2;
