@@ -16,11 +16,12 @@ exports.createUser = async (userData: Partial<User>): Promise<User> => {
 
 // Update user berdasarkan email
 exports.updateUserByEmail = async (email: string, input: Partial<User>): Promise<User | undefined> => {
-  const updatedUser = await User.query()
-    .patchAndFetchById(
-      (await User.query().findOne({ email }))?.id || 0,
-      input
-    );
+  const existingUser = await User.query().findOne({ email });
+  if (!existingUser) {
+    return undefined; // nanti controller balikin 404
+  }
+
+  const updatedUser = await User.query().patchAndFetchById(existingUser.id, input);
   return updatedUser || undefined;
 };
 
