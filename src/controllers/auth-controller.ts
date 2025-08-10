@@ -4,6 +4,13 @@ const authService = require('../services/auth-service');
 
 // registrasi user
 exports.register = async (req: Request, res: Response) => {
+  if (!req.body || typeof req.body !== 'object') {
+    return res.status(400).json({
+      statusCode: 400,
+      message: 'Request body tidak boleh kosong',
+    });
+  }
+  
   const input = req.body;
   const requiredFields: string[] = [
     'email', 'password', 'name',
