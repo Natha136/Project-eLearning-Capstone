@@ -6,7 +6,6 @@ export async function up(knex: Knex): Promise<void> {
     table.bigIncrements('id').primary();
     table.string('title').notNullable();
     table.string('slug').notNullable();
-    table.text('mentor').notNullable();
     table.text('description').notNullable();
     table.text('image').notNullable();
     table.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
