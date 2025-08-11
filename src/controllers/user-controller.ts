@@ -5,20 +5,10 @@ const userService = require('../services/user-service');
 const authService = require('../services/auth-service');
 
 // mendapatkan list users
-exports.index = async (req: AuthenticatedRequest, res: Response) => {
+exports.index = async (req: Request, res: Response) => {
   try {
-    if (req.user.role === 'student') {
-      // Student cuma lihat profil sendiri
-      const userData = await userService.getUserById(req.user.id);
-      return res.status(200).json({
-        statusCode: 200,
-        message: 'Sukses mendapatkan profil!',
-        data: userData,
-      });
-    }
-
-    // Admin & Mentor bisa lihat semua
-    const userData = await userService.getAllUsers();
+    const userData = await userService.getAllUsers(); // ← pakai await
+    
     if (!userData || userData.length === 0) {
       return res.status(404).json({
         statusCode: 404,
@@ -41,15 +31,7 @@ exports.index = async (req: AuthenticatedRequest, res: Response) => {
 };
 
 // get user by email
-exports.getUserByEmail = async (req: AuthenticatedRequest, res: Response) => {
-  // Student tidak boleh akses endpoint ini
-  if (req.user.role === 'student') {
-    return res.status(403).json({
-      statusCode: 403,
-      message: 'Akses ditolak!',
-    });
-  }
-
+exports.getUserByEmail = async (req: Request, res: Response) => {
   const email = req.params.email;
 
   try {
