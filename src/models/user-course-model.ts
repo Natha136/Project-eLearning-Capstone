@@ -9,7 +9,7 @@ export class UserCourse extends Model {
   id?: number;
   user_id!: number;
   course_id!: number;
-  enrolled_at!: Date;
+  enrolled_at?: Date;
 
   static relationMappings = {
     user: {
